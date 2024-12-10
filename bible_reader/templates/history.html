@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+    {% block main %}
+    <div class="progress">
+        <div class="progress-bar" style="width: {{ (days_completed / total_days) * 100 }}%;" role="progressbar" aria-valuenow="{{ days_completed }}" aria-valuemin="0" aria-valuemax="{{ total_days }}">
+            {{ days_completed }} of {{ total_days }} days completed
+        </div>
+    </div>
+    <div class="container">
+        <h1 class="display-4">Your Reading History</h1>
+        <p class="lead">This table records your reading progress starting from your registration date. Each completed scripture is listed with the completion date.</p>
+        <tr>
+            <td>{{ reading.completion_date }}</td>
+            <td>{{ reading.reading_1 }}</td>
+            <td>{{ reading.reading_2 }}</td>
+            <td>{{ reading.reading_3 }}</td>
+            <td>{{ reading.reading_4 }}</td>
+            <td>
+                {% if reading.completed %}
+                    <span class="text-success">Completed</span>
+                {% else %}
+                    <span class="text-danger">Incomplete</span>
+                {% endif %}
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Date Read</th>
+                    <th>Scripture</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reading in progress %}
+                    <tr>
+                        <td>{{ reading.completion_date.strftime('%d-%m') }}</td>
+                        <td>
+                            <!-- Concatenate the scripture readings for the day -->
+                            {% for i in range(1, 5) %}
+                                {% set chapter = reading['chapter_' + loop.index|string] %}
+                                {% set start_verse = reading['start_verse_' + loop.index|string] %}
+                                {% set end_verse = reading['end_verse_' + loop.index|string] %}
+                                {% if chapter %}
+                                    <div>{{ chapter }} {{ start_verse }}-{{ end_verse }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if reading.completed %}
+                                <span class="text-success">Completed</span>
+                            {% else %}
+                                <span class="text-danger">Incomplete</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center">No completed readings found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

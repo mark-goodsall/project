@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block main %}
+    <h2>Settings</h2>
+
+    <!-- Bible Version Selection -->
+    <form action="/update_bible_version" method="post">
+        <div class="mb-3">
+            <label for="bible_version" class="form-label">Select Bible Version</label>
+            <select class="form-control" name="bible_version" id="bible_version">
+                <option value="KJV" {% if user.bible_version == 'KJV' %}selected{% endif %}>King James Version (KJV)</option>
+                <option value="NIV" {% if user.bible_version == 'NIV' %}selected{% endif %}>New International Version (NIV)</option>
+                <option value="ESV" {% if user.bible_version == 'ESV' %}selected{% endif %}>English Standard Version (ESV)</option>
+                <option value="NLT" {% if user.bible_version == 'NLT' %}selected{% endif %}>New Living Translation (NLT)</option>
+                <!-- Add more options if needed -->
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Bible Version</button>
+    </form>
+
+    <!-- Reading Plan Adjustments -->
+    <form action="/update_reading_plan" method="post">
+        <div class="mb-3">
+            <label for="reading_plan" class="form-label">Select Reading Plan</label>
+            <select class="form-control" name="reading_plan" id="reading_plan">
+                <option value="Mcheyne" {% if user.reading_plan == 'Mcheyne' %}selected{% endif %}>M'Cheyne Reading Plan</option>
+                <option value="Chronological" {% if user.reading_plan == 'Chronological' %}selected{% endif %}>Chronological Reading Plan</option>
+                <option value="Thematic" {% if user.reading_plan == 'Thematic' %}selected{% endif %}>Thematic Reading Plan</option>
+                <!-- Add more reading plans if needed -->
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Reading Plan</button>
+    </form>
+
+    <!-- Daily Reading Reminders -->
+    <form action="/update_reminders" method="post">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="reminders" id="reminders" {% if user.reminders == 1 %}checked{% endif %}>
+            <label class="form-check-label" for="reminders">
+                Receive daily reading reminders
+            </label>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Reminder Settings</button>
+    </form>
+
+    <!-- Start Date for Reading Plan -->
+    <form action="/update_start_date" method="post">
+        <div class="mb-3">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" name="start_date" id="start_date" value="{{ user.start_date }}">
+        </div>
+        <button class="btn btn-primary" type="submit">Update Start Date</button>
+    </form>
+
+    <!-- Font and Display Preferences -->
+    <form action="/update_font_size" method="post">
+        <div class="mb-3">
+            <label for="font_size" class="form-label">Font Size</label>
+            <select class="form-control" name="font_size" id="font_size">
+                <option value="small" {% if user.font_size == 'small' %}selected{% endif %}>Small</option>
+                <option value="medium" {% if user.font_size == 'medium' %}selected{% endif %}>Medium</option>
+                <option value="large" {% if user.font_size == 'large' %}selected{% endif %}>Large</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Font Size</button>
+    </form>
+
+
+    <!-- Theme Customization -->
+    <form action="/update_theme" method="post">
+        <div class="mb-3">
+            <label for="theme" class="form-label">Select Theme</label>
+            <select class="form-control" name="theme" id="theme">
+                <option value="light" {% if user.theme == 'light' %}selected{% endif %}>Light</option>
+                <option value="dark" {% if user.theme == 'dark' %}selected{% endif %}>Dark</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Theme</button>
+    </form>
+
+    <!-- Account Information -->
+    <form action="/update_email" method="post">
+        <div class="mb-3">
+            <label for="email" class="form-label">Update Email</label>
+            <input type="email" class="form-control" name="email" id="email" value="{{ user.email }}" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Email</button>
+    </form>
+
+    <!-- Delete Account -->
+    <form action="/delete_account" method="post">
+        <div class="mb-3">
+            <p class="text-danger">Deleting your account is permanent and cannot be undone.</p>
+        </div>
+        <button class="btn btn-danger" type="submit">Delete Account</button>
+    </form>
+
+    <!-- Reset Progress -->
+    <form action="/reset_progress" method="post">
+        <div class="mb-3">
+            <p class="text-warning">This will reset your progress and start the reading plan from scratch.</p>
+        </div>
+        <button class="btn btn-warning" type="submit">Reset Progress</button>
+    </form>
+
+{% endblock %}

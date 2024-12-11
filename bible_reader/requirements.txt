@@ -1,0 +1,7 @@
+Flask
+flask-babel
+Flask-Login
+Flask-Session
+python-dotenv
+pytz
+requests

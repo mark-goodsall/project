@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Reading 1{% endblock %}
+
+{% block main %}
+    <h3 class="display-4">Reading {{ book_number }} - Chapter {{ chapter }}</h3>
+    <p class="lead">This is a placeholder page for the first scripture reading.</p>
+
+    <div class="container mt-4">
+        <hr>
+
+        <!-- Loop through and display the scripture verses -->
+        {% for verse in verses %}
+            <p>[{{ verse.verse }}] {{ verse.text }}</p>
+        {% endfor %}
+        <h1>{{ text }}</h1>
+        <hr>
+
+        <form method="POST" action="/progress">
+            <button type="submit" class="btn btn-primary">Mark as Read</button>
+        </form>
+    </div>
+{% endblock %}

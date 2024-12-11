@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Progress Bar
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-4">
+        <h2 class="display-4">Bible Reading Plan Progress</h2>
+
+        <!-- Progress Bar Section -->
+        <div class="mt-4">
+            <h5>Progress</h5>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{ progress_percentage }};" aria-valuenow="{{ progress_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                    {{ progress_percentage }}%
+                </div>
+            </div>
+        </div>
+
+        <!-- Bible Reading Plan Progress Details -->
+        <div class="mt-4">
+            <h3>Current Plan</h3>
+            <p>Completed: {{ completed_chapters }} of {{ total_chapters }} chapters.</p>
+            <p>Start Date: {{ start_date }}</p>
+
+            <hr>
+
+            <!-- Check if there is any reading progress data -->
+            {% if progress %}
+                <table class="table table-striped table-bordered w-auto mx-auto">
+                    <thead>
+                        <tr>
+                            <th>Scripture</th>
+                            <th>Completion Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reading in progress %}
+                            <tr>
+                                <td>{{ reading.scripture_title }}</td>
+                                <td>{{ reading.completion_date }}</td>
+                                <td>
+                                    {% if reading.completed %}
+                                        <span class="text-success">Completed</span>
+                                    {% else %}
+                                        <span class="text-danger">Incomplete</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center">No completed readings found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No progress data found. Please start reading!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
